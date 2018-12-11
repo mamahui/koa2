@@ -73,3 +73,18 @@
 .block{
     display: block;
 }
+.miss-container{
+    margin-top: 200px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+.miss{
+    font-size: 48px;
+    color: red;
+}
+.miss-tip{
+    font-size: 28px;
+    color: deeppink;
+}

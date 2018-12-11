@@ -19,7 +19,7 @@ app.use(views(__dirname + './src/views', {
 
 
 const emitter = new events.EventEmitter();
-
+const port = 3389
 const routerConfig =  require( './src/config/routerConfig');
 const callback =  require( './src/controller');
 
@@ -29,6 +29,19 @@ router.get(routerConfig.GET_ZHI_LIAN_CITY_CONFIG, async (ctx, next) => {
 router.get('/index', async (ctx, next) => {
   const html = await new Promise((resolve, reject) => {
     fs.readFile('./public/index.html', (err, data) => {
+      if(err) {
+        reject();
+      } else {
+        resolve(data);
+      }
+    })
+  });
+  ctx.type = 'html';
+  ctx.body = html;
+});
+router.get('/miss', async (ctx, next) => {
+  const html = await new Promise((resolve, reject) => {
+    fs.readFile('./public/miss.html', (err, data) => {
       if(err) {
         reject();
       } else {
@@ -158,4 +171,4 @@ router.get('/exportexcel/:name',async (ctx) => {
   }
 });
 app.use(router.routes());
-app.listen(3389, () => console.log('server is listening at 3000 port'));
+  app.listen(port, () => console.log(`server is listening at ${port} port`));
