@@ -158,4 +158,4 @@ router.get('/exportexcel/:name',async (ctx) => {
   }
 });
 app.use(router.routes());
-app.listen(3000, () => console.log('server is listening at 3000 port'));
+app.listen(3389, () => console.log('server is listening at 3000 port'));
