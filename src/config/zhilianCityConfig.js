@@ -1,0 +1,33 @@
+const cityConfig = [
+  { cityId: '489',  name: '全国' },
+  { cityId: '530',  name: '北京' },
+  { cityId: '538',  name: '上海' },
+  { cityId: '765',  name: '深圳' },
+  { cityId: '763',  name: '广州' },
+  { cityId: '531',  name: '天津' },
+  { cityId: '801',  name: '成都' },
+  { cityId: '653',  name: '杭州' },
+  { cityId: '736',  name: '武汉' },
+  { cityId: '600',  name: '大连' },
+  { cityId: '613',  name: '长春' },
+  { cityId: '635',  name: '南京' },
+  { cityId: '702',  name: '济南' },
+  { cityId: '703',  name: '青岛' },
+  { cityId: '639',  name: '苏州' },
+  { cityId: '599',  name: '沈阳' },
+  { cityId: '854',  name: '西安' },
+  { cityId: '719',  name: '郑州' },
+  { cityId: '749',  name: '长沙' },
+  { cityId: '551',  name: '重庆' },
+  { cityId: '622',  name: '哈尔滨' },
+  { cityId: '636',  name: '无锡' },
+  { cityId: '654',  name: '宁波' },
+  { cityId: '681',  name: '福州' },
+  { cityId: '682',  name: '厦门' },
+  { cityId: '565',  name: '石家庄' },
+  { cityId: '664',  name: '合肥' },
+  { cityId: '773',  name: '惠州' },
+];
+module.exports = {
+  cityConfig
+};

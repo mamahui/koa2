@@ -1,0 +1,75 @@
+.container{
+    display: flex;
+    padding: 40px 100px 0 100px;
+    flex-wrap:wrap;
+}
+.test{
+    margin: 50px;
+    padding: 50px;
+    width: 800px;
+    height: 600px;
+    border: 1px solid #e1e1e1;
+}
+.tips{
+    color: red;
+    font-size: 20px;
+}
+.test h2{
+    margin: 0!important;
+    text-align: center;
+    color: orange;
+}
+.test .primary-button{
+
+}
+#result{
+    background-color: #dcf1ff;
+    padding: 10px;
+    min-height: 50px;
+}
+#city_region{
+    background-color: #dcf1ff;
+    padding: 10px;
+}
+.city:focus{
+    outline: none;
+}
+.city{
+    width: 65px;
+    padding: 2px 5px;
+    font-size: 16px;
+    background-color: orange;
+    border: none;
+    color: white;
+    margin: 5px;
+    border-radius: 4px;
+    text-align: center;
+}
+.city-active{
+    background-color: palevioletred;
+    color: white;
+}
+.button-container{
+    margin-top: 30px;
+    display: flex;
+    justify-content: center;
+}
+.get-data{
+    width: 100px;
+    height: 50px;
+    background-color: dodgerblue;
+    color: white;
+}
+.result-container{
+    display: none;
+}
+.total{
+    font-size: 24px;
+}
+.total span{
+    color: red;
+    font-size: 28px;
+}
+.block{
+    display: block;
+}

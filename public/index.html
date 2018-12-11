@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>首页</title>
+    <link rel="stylesheet" href="../public/css/index.css">
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.min.js"></script>
+</head>
+<body>
+<div class="container">
+    <input type="hidden" id="cityId">
+    <input type="hidden" id="start">
+    <input type="hidden" id="name">
+    <div class="test">
+        <h2>智联招聘</h2>
+        <div>
+            <p class="tips">选取抓取区域</p>
+            <div id="city_region"></div>
+        </div>
+        <div class="button-container">
+            <button class="city get-data" onclick="test()">爬取</button>
+            <button class="city get-data" onclick="test1()">导出数据</button>
+        </div>
+        <div class="result-container">
+            <p class="tips">抓取结果</p>
+            <div id="result">
+                <p class="total">总共 <span id="total"></span>条，共 <span id="totalPage"></span>页</p>
+                <div class="page-container"><button class="get-data">获取全部</button> </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+<script>
+  (function(){
+    axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded';
+    axios.get('/getZhiLianCityConfig').then(data => {
+      data.data.content.map(function (item) {
+        let btn = '';
+        if(item.cityId === '489') {
+           btn = $("<input type='button' class='city city-active'" +" cityId="+ item.cityId+" value="+ item.name+">");
+          $('#cityId').val(item.cityId);
+          $('#name').val(item.name);
+          $('#start').val(0)
+        } else {
+          btn = $("<input type='button' class='city'" +" cityId="+ item.cityId+" value="+ item.name+">");
+        }
+        $("#city_region").append(btn);
+      });
+    })
+  }());
+  $('#city_region').on('click','.city', function(){
+    $('.city').removeClass('city-active');
+    $(this).addClass('city-active');
+    $('#cityId').val($(this).attr('cityId'));
+    $('#name').val($(this).val());
+    $('#start').val(0)
+  });
+  $('.result-container').on('click', '.get-data', function () {
+    const total = $('#totalPage').text();
+    let pn = 0;
+    const timer = setInterval(() => {
+      if(pn <= total){
+        axios.post('/grabzhilian', {
+          name: $('#name').val(),
+          cityId: $('#cityId').val(),
+          pn: pn
+        }).then(data =>{
+          console.log(`成功抓取到第${pn}页，已经得到${pn === 0? 60 : pn*60}条数据`);
+        })
+      } else {
+        clearInterval(timer)
+      }
+      pn += 1;
+    },5000)
+  });
+    function test(val) {
+      if(val) {
+        console.log(val);
+      }
+      axios.post('/grabzhilian', {
+        name: $('#name').val(),
+        cityId: $('#cityId').val(),
+        pn:val? val: $('#start').val()
+      })
+        .then(function (response) {
+          $('#total').text(response.data.content.data.numFound);
+          $('#totalPage').text(parseInt(response.data.content.data.numFound/60));
+          // for (let i = 0; i< parseInt(response.data.content.data.numFound/60); i++){
+          //   $('.page-container').append($("<button class='city get-data' pn="+i+" onclick='test("+i+")'>爬取第"+i+"页</button>"));
+          // }
+          $('.result-container').addClass('block')
+        })
+        .catch(function (error) {
+         alert(error);
+        });
+    }
+    function test1() {
+      window.location = `/exportexcel/${$('#name').val()}`;
+    }
+</script>
+</body>
+</html>
