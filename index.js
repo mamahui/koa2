@@ -56,20 +56,6 @@ app.use(views(__dirname + '/views', {
   extension: 'ejs'
 }));
 
-router.get(routerConfig.EXPORT_ZHI_LIAN_EXCEL, async (ctx) => {
-  let data1 = null;
-  const result = await fs.readFile('./public/try4.json','utf-8', function (err, data) {
-    if(err) {
-      throw err;
-    } else {
-      return data
-    }
-    result.then(data => {data1 = data});
-});
-  ctx.body = {
-    data: data1
-  }
-});
 
 
 router.post(routerConfig.GRAB_ZHI_LIAN, async (ctx, next) => {
