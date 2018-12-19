@@ -66,7 +66,7 @@ router.get('/exportexcel/:name',async (ctx) => {
   const name = decodeURIComponent(ctx.url).split('/')[2];
   async function readydata() {
     return new Promise(async (resolve, reject) => {
-      await fs.readFile(path.join(__dirname, `./public/智联招聘-${name}.json`),'utf-8',async function (err, data) {
+      await fs.readFile(path.join(__dirname, `./public/file/智联招聘-${name}.json`),'utf-8',async function (err, data) {
         if (!err) {
           resolve(JSON.parse(data).text);
         } else {

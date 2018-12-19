@@ -18,9 +18,9 @@ const callback_laGou = async (ctx, next) => {
           total: JSON.parse(res.text).data.numFound,
           text: JSON.parse(res.text).data.results,
         };
-        await fs.readFile(path.join(__dirname, `./../../public/智联招聘-${name}.json`),'utf-8',async function (err, data) {
+        await fs.readFile(path.join(__dirname, `./../../public/file/智联招聘-${name}.json`),'utf-8',async function (err, data) {
           if(err) {
-            await fs.writeFile(path.join(__dirname, `./../../public/智联招聘-${name}.json`), JSON.stringify(file), function(err1) {
+            await fs.writeFile(path.join(__dirname, `./../../public/file/智联招聘-${name}.json`), JSON.stringify(file), function(err1) {
               if(err1) {
                 throw err1;
               }
@@ -31,7 +31,7 @@ const callback_laGou = async (ctx, next) => {
               resObj.pn = pn;
               resObj.total = JSON.parse(res.text).data.numFound;
               resObj.text = [...resObj.text, ...JSON.parse(res.text).data.results];
-              await fs.writeFile(path.join(__dirname, `./../../public/智联招聘-${name}.json`), JSON.stringify(resObj), function(err1) {
+              await fs.writeFile(path.join(__dirname, `./../../public/file/智联招聘-${name}.json`), JSON.stringify(resObj), function(err1) {
                 if(err1) {
                   throw err1;
                 }
@@ -39,7 +39,7 @@ const callback_laGou = async (ctx, next) => {
             }
           }
         });
-         // await fs.writeFile(path.join(__dirname, `./../../public/智联招聘-${name}.json`), file, function(err) {
+         // await fs.writeFile(path.join(__dirname, `./../../public/file/智联招聘-${name}.json`), file, function(err) {
          //   if(err) {
          //     throw err;
          //   }
