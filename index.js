@@ -4,29 +4,34 @@ const views = require('koa-views');
 const bodyParser = require('koa-bodyparser');
 const staticServer = require('koa-static');
 const path = require("path");
+const koaBody = require('koa-body');
 const nodeExcel = require('excel-export');//关联excel-export模块
-const superagent = require('superagent');
-const events = require("events");
-
-
-const app = new koa();
-app.use(staticServer(__dirname , 'public'));
 const fs = require('fs');
+const envConfig = require('./src/config/envConfig');
+const routerConfig =  require( './src/config/routerConfig');
+const callback =  require( './src/controller');
+const utils = require('./src/utils');
+const app = new koa();
+
+app.use(staticServer(__dirname , 'public'));
+app.use(koaBody({
+  multipart: true,
+  formidable: {
+    maxFileSize: 2000*1024*1024 // 设置上传文件大小最大限制，默认20M
+  }
+}));
 app.use(bodyParser());
 app.use(views(__dirname + './src/views', {
   map : {html:'ejs'}
 }));
 
-
-const emitter = new events.EventEmitter();
-const port = 3389;
-const routerConfig =  require( './src/config/routerConfig');
-const callback =  require( './src/controller');
-
-router.get(routerConfig.GET_ZHI_LIAN_CITY_CONFIG, async (ctx, next) => {
+  router.get(routerConfig.GET_ZHI_LIAN_CITY_CONFIG, async (ctx, next) => {
   ctx.body = await callback.getzhilianCityConfig(ctx, next);
 });
 router.get('/index', async (ctx, next) => {
+  const reqInfo = new utils.getReqInfo(ctx.req);
+  const reqInfo1 = new utils.getReqInfo(ctx.request);
+  const start = new Date();
   const html = await new Promise((resolve, reject) => {
     fs.readFile('./public/index.html', (err, data) => {
       if(err) {
@@ -38,6 +43,8 @@ router.get('/index', async (ctx, next) => {
   });
   ctx.type = 'html';
   ctx.body = html;
+  const ms = new Date() - start;
+  console.log(ms)
 });
 router.get('/miss', async (ctx, next) => {
   const html = await new Promise((resolve, reject) => {
@@ -60,6 +67,9 @@ app.use(views(__dirname + '/views', {
 
 router.post(routerConfig.GRAB_ZHI_LIAN, async (ctx, next) => {
     ctx.body = await callback.getzhilianData(ctx, next)
+});
+router.post(routerConfig.UPLOAD_FILES, async (ctx, next) => {
+  ctx.body = await callback.upLoad(ctx, next);
 });
 //导出Excel，xlsx格式
 router.get('/exportexcel/:name',async (ctx) => {
@@ -99,7 +109,6 @@ router.get('/exportexcel/:name',async (ctx) => {
       arr.push(v[i].updateDate);
       alldata.push(arr);
     }
-    console.log('alldata', alldata[alldata.length-1]);
     //决定列名和类型
     conf.cols = [{
       caption:'公司名称',
@@ -157,4 +166,10 @@ router.get('/exportexcel/:name',async (ctx) => {
   }
 });
 app.use(router.routes());
-  app.listen(port, () => console.log(`server is listening at ${port} port`));
+app.on('error', async(err, ctx) => {
+    console.error('server error', err, ctx)
+});
+app.listen(envConfig.port, () => {
+  console.log(process.env.NODE_ENV);
+  console.log(`server is listening at ${envConfig.port} port`);
+});

@@ -4,19 +4,26 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "dev": "supervisor index"
+    "local": "set NODE_ENV=development && supervisor index",
+    "dev": "set NODE_ENV=development && node index",
+    "build": "set NODE_ENV=production node index"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
     "excel-export": "^0.5.1",
     "koa": "^2.6.2",
+    "koa-body": "^4.0.4",
     "koa-bodyparser": "^4.2.1",
     "koa-router": "^7.4.0",
     "koa-static": "^5.0.0",
     "koa-views": "^6.1.4",
+    "log4js": "^3.0.6",
     "mz": "^2.7.0",
     "node-xlsx": "^0.12.1",
     "superagent": "^4.0.0"
+  },
+  "devDependencies": {
+    "cross-env": "^5.2.0"
   }
 }

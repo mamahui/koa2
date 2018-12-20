@@ -29,6 +29,7 @@
                 <div class="page-container"><button class="get-data">获取全部</button> </div>
             </div>
         </div>
+        <input type="file" id="fileUpload" value="文件">
     </div>
 
 </div>
@@ -99,6 +100,21 @@
     function test1() {
       window.location = `/exportexcel/${$('#name').val()}`;
     }
+
+  $("#fileUpload").change(function () {
+    var instance = axios.create({
+      baseURL: 'http://localhost:3000',
+      headers: {'X-Custom-Header': 'foobar', "Content-Type": "multipart/form-data"},
+      transformRequest: [function (data) {
+        return data
+      }],
+    });
+    console.log($("#fileUpload")[0].files);
+    var data = new FormData();
+    data.append("files",$("#fileUpload")[0].files[0]);
+    console.log(data.get('files'));
+    instance.post('/uploadFiles',data).then( (data)=> console.log(data))
+  });
 </script>
 </body>
 </html>

@@ -3,6 +3,9 @@ const fs = require('fs');
 const path = require("path");
 const response = require('./../config/responseConfig');
 const cityConfig = require('./../config/zhilianCityConfig');
+const utils = require('./../utils');
+const envConfig = require('./../config/envConfig');
+const getDate = new utils.getDate();
 
 // 爬智联招聘网站
 const callback_laGou = async (ctx, next) => {
@@ -53,16 +56,33 @@ const getzhilianData = async (ctx, next) => {
     let data= await callback_laGou(ctx, next);
     return response.success(JSON.parse(data.text) || '暂无');
   } catch (err) {
-    return response.success(err);
+    return response.fail(err);
   }
 };
 
-//
+//图片上传
+const upLoad = async (ctx, next) => {
+  const file = ctx.request.files.files;
+  // 创建可读流
+  const reader = await fs.createReadStream(file.path);
+  const name = `/${getDate.getFullDate().replace('-', '')}${file.name}`;
+  const filePath = path.join(__dirname, `./../../public/upload${name}`) ;
+  const upStream = await fs.createWriteStream(filePath);
+  // 可读流通过管道写入可写流/upload
+  try{
+    await reader.pipe(upStream);
+    return response.success({url: `${envConfig.domain}/public/upload${name}`});
+  }catch (e) {
+    return response.fail('上传失败');
+  }
+};
+
 const getzhilianCityConfig = async (ctx, next) => {
 return response.success(cityConfig.cityConfig)
 };
 module.exports = {
   callback_laGou,
   getzhilianData,
-  getzhilianCityConfig
+  getzhilianCityConfig,
+  upLoad
 };
