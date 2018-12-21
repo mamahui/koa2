@@ -1,6 +1,7 @@
 const superagent = require('superagent');
 const fs = require('fs');
 const path = require("path");
+const fetch = require('node-fetch');
 const response = require('./../config/responseConfig');
 const cityConfig = require('./../config/zhilianCityConfig');
 const utils = require('./../utils');
@@ -69,6 +70,13 @@ const upLoad = async (ctx, next) => {
   const filePath = path.join(__dirname, `./../../public/upload${name}`) ;
   const upStream = await fs.createWriteStream(filePath);
   // 可读流通过管道写入可写流/upload
+  await fetch(envConfig.fileLoadUrl, {method: 'post',}).then(data => {
+    debugger;
+    console.log(data)
+  }).catch(err => {
+    debugger;
+    console.log(err)
+  });
   try{
     await reader.pipe(upStream);
     return response.success({url: `${envConfig.domain}/public/upload${name}`});

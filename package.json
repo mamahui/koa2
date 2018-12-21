@@ -20,6 +20,7 @@
     "koa-views": "^6.1.4",
     "log4js": "^3.0.6",
     "mz": "^2.7.0",
+    "node-fetch": "^2.3.0",
     "node-xlsx": "^0.12.1",
     "superagent": "^4.0.0"
   },
