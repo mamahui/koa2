@@ -6,7 +6,7 @@
   "scripts": {
     "local": "set NODE_ENV=development && supervisor index",
     "dev": "set NODE_ENV=development && node index",
-    "build": "set NODE_ENV=production node index"
+    "build": "set NODE_ENV=production && node index"
   },
   "author": "",
   "license": "ISC",
