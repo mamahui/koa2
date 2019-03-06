@@ -4,9 +4,9 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "local": "cross-env INIT_LEVEL=development && supervisor index",
-    "dev": "cross-env INIT_LEVEL=development && node index",
-    "build": "cross-env INIT_LEVEL=production && node index"
+    "local": "cross-env NODE_ENV=development supervisor index",
+    "dev": "cross-env NODE_ENV=development node index",
+    "build": "cross-env NODE_ENV=production node index"
   },
   "author": "",
   "license": "ISC",
