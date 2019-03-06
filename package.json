@@ -4,9 +4,9 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "local": "set NODE_ENV=development && supervisor index",
-    "dev": "set NODE_ENV=development && node index",
-    "build": "set NODE_ENV=production && node index"
+    "local": "set INIT_LEVEL=development && supervisor index",
+    "dev": "set INIT_LEVEL=development && node index",
+    "build": "set INIT_LEVEL=production && node index"
   },
   "author": "",
   "license": "ISC",
