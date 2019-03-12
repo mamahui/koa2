@@ -59,6 +59,19 @@ router.get('/miss', async (ctx, next) => {
   ctx.type = 'html';
   ctx.body = html;
 });
+router.get('/gesture', async (ctx, next) => {
+  const html = await new Promise((resolve, reject) => {
+    fs.readFile('./public/gesture.html', (err, data) => {
+      if(err) {
+        reject();
+      } else {
+        resolve(data);
+      }
+    })
+  });
+  ctx.type = 'html';
+  ctx.body = html;
+});
 app.use(views(__dirname + '/views', {
   extension: 'ejs'
 }));
@@ -95,9 +108,9 @@ router.get('/exportexcel/:name',async (ctx) => {
   async function exportdata(v) {
     let conf ={};
     conf.name = "sheet1";//表格名
-    let alldata = new Array();
+    let alldata = [];
     for(let i = 0;i<v.length;i++){
-      let arr = new Array();
+      let arr = [];
       arr.push(v[i].company.name);
       arr.push(v[i].salary);
       arr.push(v[i].jobName);
@@ -170,6 +183,5 @@ app.on('error', async(err, ctx) => {
     console.error('server error', err, ctx)
 });
 app.listen(envConfig.port, () => {
-  console.log(process.env.NODE_ENV);
   console.log(`server is listening at ${envConfig.port} port`);
 });
