@@ -9,6 +9,19 @@
 <div id="output">
 </div>
 <script>
+  function debounce(func, wait) {
+    var timeout;
+
+    return function () {
+      var context = this;
+      var args = arguments;
+
+      clearTimeout(timeout)
+      timeout = setTimeout(function(){
+        func.apply(context, args)
+      }, wait);
+    }
+  }
   function handleGestureEvent(event){
     var output = document.getElementById("output");
     switch(event.type){
@@ -23,10 +36,12 @@
         break;
     }
   }
-
-  document.addEventListener("gesturestart", handleGestureEvent, false);
-  document.addEventListener("gestureend", handleGestureEvent, false);
-  document.addEventListener("gesturechange", handleGestureEvent, false);
+  function beforeDeal() {
+    debounce(handleGestureEvent,100);
+  }
+  document.addEventListener("gesturestart", beforeDeal, false);
+  document.addEventListener("gestureend", beforeDeal, false);
+  document.addEventListener("gesturechange", beforeDeal, false);
 </script>
 
 </body>
