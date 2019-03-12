@@ -36,8 +36,8 @@
         break;
     }
   }
-  function beforeDeal() {
-    debounce(handleGestureEvent,100);
+  function beforeDeal(event) {
+    debounce(handleGestureEvent(event),100);
   }
   document.addEventListener("gesturestart", beforeDeal, false);
   document.addEventListener("gestureend", beforeDeal, false);
