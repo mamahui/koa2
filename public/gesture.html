@@ -28,7 +28,7 @@
 
   }
   function beforeDeal(event) {
-    debounce(handleGestureEvent(event),100);
+    debounce(handleGestureEvent(event),300);
   }
   document.addEventListener("gestureend", beforeDeal, false);
 </script>
