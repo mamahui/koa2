@@ -3,11 +3,27 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
+    <style>
+        :root {
+            --main-bg-color: red;
+            --font-color: yellow;
+            --hover-font-color:blue
+        }
+        .content{
+            background-color: var(--main-bg-color);
+            color: var(--font-color)
+        }
+        .content:hover{
+            color: var(--hover-font-color)
+        }
+    </style>
 </head>
 <body>
 <p>Touch anywhere on the screen with two fingers. This only works on an iPhone or iPod Touch running iPhone 2.x software.</p>
 <div id="output">
 </div>
+<div class="content">12312321321</div>
+<button id="test">test</button>
 <script>
   function debounce(func, wait) {
     var timeout;
@@ -31,6 +47,18 @@
     debounce(handleGestureEvent(event),300);
   }
   document.addEventListener("gestureend", beforeDeal, false);
+  const button = document.getElementById('test');
+  button.onclick= function () {
+    document.documentElement.style.setProperty('--main-bg-color', 'pink');
+  };
+  function changeColor() {
+    const colors = ['pink', 'red'];
+    let index = 0;
+    setInterval(function(){
+      index = index === 0 ? 1 : 0;
+      document.documentElement.style.setProperty('--main-bg-color', colors[index]);
+    },100)
+  };
 </script>
 
 </body>

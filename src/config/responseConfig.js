@@ -1,15 +1,15 @@
 const success = data => {
   return {
     code: '0000',
-    message: 'success',
+    status: 'success',
     content: data
   }
 };
 const fail = data => {
   return {
     code: '9999',
-    message: 'error',
-    data: data
+    status: 'error',
+    content: data
   }
 };
 

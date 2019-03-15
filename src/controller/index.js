@@ -66,10 +66,8 @@ const upLoad = async (ctx, next) => {
   const upStream = await fs.createWriteStream(filePath);
   // 可读流通过管道写入可写流/upload
   await fetch(envConfig.fileLoadUrl, {method: 'post',}).then(data => {
-    debugger;
     console.log(data)
   }).catch(err => {
-    debugger;
     console.log(err)
   });
   try{
@@ -83,9 +81,17 @@ const upLoad = async (ctx, next) => {
 const getzhilianCityConfig = async (ctx, next) => {
 return response.success(cityConfig.cityConfig)
 };
+const userData = {
+  name: 'mahui',
+  age: 25,
+  isMale: true
+};
+const getUserData = async (ctx, next) => response.success(userData);
+
 module.exports = {
   callback_laGou,
   getzhilianData,
   getzhilianCityConfig,
-  upLoad
+  upLoad,
+  getUserData
 };
