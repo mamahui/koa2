@@ -58,7 +58,7 @@ router.get('/gesture', async (ctx, next) => {
 });
 router.get('/test', async (ctx, next) => {
   const html = await new Promise((resolve, reject) => {
-    fs.readFile('./public/dist/index.html', (err, data) => {
+    fs.readFile('./public/index.html', (err, data) => {
       if(err) {
         reject();
       } else {
