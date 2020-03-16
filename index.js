@@ -9,8 +9,7 @@ const router = require('./src/router/index');
 const cors = require('koa2-cors');
 const response = require('./src/config/responseConfig');
 
-// app.use(staticServer(__dirname , './public'));
-app.use(staticServer('./public'));
+app.use(staticServer(__dirname , './public'));
 app.use(koaBody({
   multipart: true,
   formidable: {
